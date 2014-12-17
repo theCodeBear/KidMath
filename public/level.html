@@ -1,0 +1,12 @@
+<div>
+  <h2>This is level {{level}}</h2>
+</div>
+<div id="operand1">{{operand1}}</div><br>
+<div id="operator">{{operator}}</div><br>
+<div id="operand2">{{operand2}}</div><br>
+<input id="answer" type="text" ng-model="answer"><br><br><br>
+<label id="submit" ng-click="submitAnswer()">Submit Answer</label><br><br>
+
+<div id="validate" ng-bind="validate"></div>
+
+<div id="lastProb">{{lastOp1}} {{lastOperator}} {{lastOp2}} = {{lastAns}}</div>

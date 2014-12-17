@@ -3,6 +3,49 @@ body {
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
+h1 {
+  font-size: 4em;
+  text-align: center;
+}
+
 a {
   color: #00B7FF;
+}
+
+ul {
+  list-style-type: none
+  margin: 0;
+  padding: 0;
+}
+
+.levelBtn {
+  margin: 0 0 2em 0;
+  padding: 0.5em 0 0.5em 0;
+  font-size: 4em;
+  color: white;
+  font-weight: bold;
+}
+
+.mathSymbols {
+  margin-left: 2em;
+  color: orange;
+}
+
+#levelButtons {
+  position: relative;
+  top: 3em;
+}
+
+#submit {
+  border: 2px solid gray;
+  border-radius: 5px;
+  padding: 1em;
+}
+
+#submit:active {
+  background-color: lightblue;
+}
+
+#lastProb {
+  visibility: hidden;
 }
