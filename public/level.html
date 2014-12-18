@@ -1,12 +1,13 @@
 <div>
-  <h2>This is level {{level}}</h2>
+  <h1>This is level {{level}}</h1>
 </div>
-<div id="operand1">{{operand1}}</div><br>
-<div id="operator">{{operator}}</div><br>
-<div id="operand2">{{operand2}}</div><br>
-<input id="answer" type="text" ng-model="answer"><br><br><br>
-<label id="submit" ng-click="submitAnswer()">Submit Answer</label><br><br>
+<div class="container">
+<div id="operand1" class="problem col-xs-12">{{operand1}}</div>
+<div id="operator" class="problem col-xs-4 col-xs-offset-0.1">{{operator}}</div>
+<div id="operand2" class="problem col-xs-4 col-xs-offset-0">{{operand2}}</div>
+<input id="answer" class="col-xs-6 col-xs-offset-3" type="text" ng-model="answer">
+<label id="submit" class="btn btn-primary col-xs-10 col-xs-offset-1" ng-click="submitAnswer()">Submit Answer</label>
 
-<div id="validate" ng-bind="validate"></div>
-
-<div id="lastProb">{{lastOp1}} {{lastOperator}} {{lastOp2}} = {{lastAns}}</div>
+<div id="validate" class="problem col-xs-10 col-xs-offset-1" ng-bind="validate"></div>
+  <div id="lastProb" class="problem col-xs-10 col-xs-offset-1">{{lastOp1}} {{lastOperator}} {{lastOp2}} = {{lastAns}}</div>
+</div>
