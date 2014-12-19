@@ -1,19 +1,10 @@
 
-angular.module('mathApp.controllers', [/*'mathApp.factories'*/])
+angular.module('mathApp.controllers', [])
 
-
-// MENU CONTROLLER //
-.controller('menu', function($scope, $location/*, levelFactory*/) {
-  $scope.goToLevel = function(level) {
-    // levelFactory.setLevel(level);
-    $location.url('/level'+level);
-  }
-})
-
-// LEVEL 1 CONTROLLER //
-.controller('level1', function($scope/*, levelFactory*/) {
+// LEVEL CONTROLLER //
+.controller('levelController', function($scope, $routeParams) {
   var problem;        // hold operands and operator at problem creation
-  $scope.level = 1;//levelFactory.getFactory();
+  $scope.level = parseInt($routeParams.level);//levelFactory.getFactory();
   $scope.tries = 0, correct = 0, wrong = 0;
 
   displayProblem();
@@ -40,178 +31,26 @@ angular.module('mathApp.controllers', [/*'mathApp.factories'*/])
       correct++;
       $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
       toDoOnCorrect($scope, correct);
+    // add class for green flash, remove it a short time later to refresh the animation
+      $('body').addClass("green");
+      setTimeout(function() {$('body').removeClass("green");}, 100);
+      
       displayProblem();
     } else {
       wrong++;
       $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
       $scope.validate = "wrong " + wrong + ": " + $scope.percentage + "%";
-    }
-  }
-})
-
-.controller('level2', function($scope) {
-  var problem;        // hold operands and operator at problem creation
-  $scope.level = 2;
-  $scope.tries = 0, correct = 0, wrong = 0;
-
-  displayProblem();
-  document.getElementById("answer").focus();
-
-  // loads problem created in createProblem() into $scope properties for use in controller
-  function displayProblem() {
-    problem = createProblem($scope.level);
-    $scope.operand1 = problem[0];
-    $scope.operand2 = problem[1];
-    $scope.operator = problem[2];
-  }
-
-  // Handles all actions associated with user submitting an answer to a problem
-  $scope.submitAnswer = function() {
-    $scope.tries++;
-    if ($scope.answer == undefined) {
-      document.getElementById("answer").focus();
-      return;
-    }
-    console.log(mathAnswer($scope.operand1, $scope.operand2)[$scope.operator]);
-    document.getElementById("answer").focus();
-    if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      correct++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      toDoOnCorrect($scope, correct);
-      displayProblem();
-    } else {
-      wrong++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      $scope.validate = "wrong " + wrong + ": " + $scope.percentage + "%";
-    }
-  }
-})
-
-.controller('level3', function($scope) {
-  var problem;        // hold operands and operator at problem creation
-  $scope.level = 3;
-  $scope.tries = 0, correct = 0, wrong = 0;
-
-  displayProblem();
-  document.getElementById("answer").focus();
-
-  // loads problem created in createProblem() into $scope properties for use in controller
-  function displayProblem() {
-    problem = createProblem($scope.level);
-    $scope.operand1 = problem[0];
-    $scope.operand2 = problem[1];
-    $scope.operator = problem[2];
-  }
-
-  // Handles all actions associated with user submitting an answer to a problem
-  $scope.submitAnswer = function() {
-    $scope.tries++;
-    if ($scope.answer == undefined) {
-      document.getElementById("answer").focus();
-      return;
-    }
-    console.log(mathAnswer($scope.operand1, $scope.operand2)[$scope.operator]);
-    document.getElementById("answer").focus();
-    if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      correct++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      toDoOnCorrect($scope, correct);
-      displayProblem();
-    } else {
-      wrong++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      $scope.validate = "wrong " + wrong + ": " + $scope.percentage + "%";
-    }
-  }
-})
-
-.controller('level4', function($scope) {
-  var problem;        // hold operands and operator at problem creation
-  $scope.level = 4;
-  $scope.tries = 0, correct = 0, wrong = 0;
-
-  displayProblem();
-  document.getElementById("answer").focus();
-
-  // loads problem created in createProblem() into $scope properties for use in controller
-  function displayProblem() {
-    problem = createProblem($scope.level);
-    $scope.operand1 = problem[0];
-    $scope.operand2 = problem[1];
-    $scope.operator = problem[2];
-  }
-
-  // Handles all actions associated with user submitting an answer to a problem
-  $scope.submitAnswer = function() {
-    $scope.tries++;
-    if ($scope.answer == undefined) {
-      document.getElementById("answer").focus();
-      return;
-    }
-    console.log(mathAnswer($scope.operand1, $scope.operand2)[$scope.operator]);
-    document.getElementById("answer").focus();
-    if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      correct++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      toDoOnCorrect($scope, correct);
-      displayProblem();
-    } else {
-      wrong++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      $scope.validate = "wrong " + wrong + ": " + $scope.percentage + "%";
-    }
-  }
-})
-
-.controller('level5', function($scope) {
-  var problem;        // hold operands and operator at problem creation
-  $scope.level = 5;
-  $scope.tries = 0, correct = 0, wrong = 0;
-
-  displayProblem();
-  document.getElementById("answer").focus();
-
-  // loads problem created in createProblem() into $scope properties for use in controller
-  function displayProblem() {
-    problem = createProblem($scope.level);
-    $scope.operand1 = problem[0];
-    $scope.operand2 = problem[1];
-    $scope.operator = problem[2];
-  }
-
-  // Handles all actions associated with user submitting an answer to a problem
-  $scope.submitAnswer = function() {
-    $scope.tries++;
-    if ($scope.answer == undefined) {
-      document.getElementById("answer").focus();
-      return;
-    }
-    console.log(mathAnswer($scope.operand1, $scope.operand2)[$scope.operator]);
-    document.getElementById("answer").focus();
-    if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      correct++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      toDoOnCorrect($scope, correct);
-      displayProblem();
-    } else {
-      wrong++;
-      console.log("correct: " + correct + ", wrong: " + wrong);
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      $scope.validate = "wrong " + wrong + ": " + $scope.percentage + "%";
+    // add class for red flash, remove it a short time later to refresh the animation
+      $('body').addClass("red");
+      setTimeout(function() {$('body').removeClass("red");}, 100);
     }
   }
 });
 
-//  PERCENTAGE AIN'T WORKING RIGHT!
 
-// FUNCTIONS
+
+
+// FUNCTIONS //
 
 // Does some stuff with the view whenever a correct answer is submitted.
 function toDoOnCorrect($scope, correct) {

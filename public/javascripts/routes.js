@@ -1,31 +1,14 @@
-angular.module('mathApp', ['ngRoute', 'mathApp.controllers'/*, 'mathApp.factories'*/])
+angular.module('mathApp', ['ngRoute', 'mathApp.controllers'])
 
 .config(['$routeProvider',
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: '/menu.html',
-        controller: 'menu'
+        templateUrl: '/menu.html'
       }).
-      when('/level1', {
+      when('/level/:level', {
         templateUrl: '/level.html',
-        controller: 'level1'
-      }).
-      when('/level2', {
-        templateUrl: '/level.html',
-        controller: 'level2'
-      }).
-      when('/level3', {
-        templateUrl: '/level.html',
-        controller: 'level3'
-      }).
-      when('/level4', {
-        templateUrl: '/level.html',
-        controller: 'level4'
-      }).
-      when('/level5', {
-        templateUrl: '/level.html',
-        controller: 'level5'
+        controller: 'levelController'
       }).
       otherwise({
         redirectTo: '/'

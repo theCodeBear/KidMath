@@ -75,3 +75,39 @@ ul {
 #lastProb {
   visibility: hidden;
 }
+
+.green {
+  -webkit-animation-name: correct;
+  -webkit-animation-duration: 0.3s;
+  animation-name: correct;
+  animation-duration: 0.3s;
+}
+
+.red {
+  -webkit-animation-name: wrong;
+  -webkit-animation-duration: 0.3s;
+  animation-name: wrong;
+  animation-duration: 0.3s;
+}
+
+@-webkit-keyframes correct {
+  25%   { background-color: green; }
+  /*50%   { background-color: white; }
+  75%   { background-color: green; }*/
+  100%  { background-color: white;}
+}
+
+@keyframes correct {
+  background: green;
+}
+
+@-webkit-keyframes wrong {
+  25%   { background-color: red; }
+  /*50%   { background-color: white; }
+  75%   { background-color: green; }*/
+  100%  { background-color: white;}
+}
+
+@keyframes wrong {
+  background: red;
+}
