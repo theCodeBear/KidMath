@@ -10,6 +10,10 @@ angular.module('mathApp', ['ngRoute', 'mathApp.controllers'])
         templateUrl: '/level.html',
         controller: 'levelController'
       }).
+      when('/timedlevel/:level', {
+        templateUrl: '/timedLevel.html',
+        controller: 'timedLevelController'
+      }).
       otherwise({
         redirectTo: '/'
       });
