@@ -6,6 +6,7 @@ body {
 h1 {
   font-size: 4em;
   text-align: center;
+  /*display: inline;*/
 }
 
 a {
@@ -13,9 +14,14 @@ a {
 }
 
 ul {
-  /*list-style-type: none*/
   margin: 0;
   padding: 0;
+}
+
+.navbar {
+  /*padding: 2%;*/
+  color: white;
+  font-size: 1.3em;
 }
 
 .levelBtn {
@@ -36,9 +42,19 @@ ul {
 
 .problem {
   position: relative;
-  font-size: 7em;
+  font-size: 9em;
   display: block;
   text-align: center;
+  font-weight: bold;
+}
+
+.bottom {
+/*  position: relative;
+  left: 5%;
+  right: 5%;
+  margin: 5%;
+  bottom: 0%;*/
+  /*margin-bottom: 0;*/
 }
 
 .numberButts {
@@ -46,19 +62,31 @@ ul {
   font-size: 7em;
   width: 33%;
   background-color: #CCC;
-  /*padding: 20px 30px 20px 30px;*/
   border: 5px solid black;
 }
 
-/*.mathSymbols {
-  margin-left: 2em;
-  color: orange;
-}*/
+#levelDisplay {
+  display: inline;
+}
 
-/*#levelButtons {
-  position: relative;
-  top: 3em;
-}*/
+#navbarStats {
+  font-size: 4em;
+  float: right;
+}
+
+#correct {
+  background-color: green;
+  padding: 0 20px 0 20px;
+}
+
+#wrong {
+  background-color: red;
+  padding: 0 20px 0 20px;
+}
+
+#backspace {
+  width: 99%;
+}
 
 #levelButtons li {
   list-style-type: none;
@@ -74,17 +102,23 @@ ul {
 #submit {
   border: 2px solid gray;
   border-radius: 5px;
-  font-size: 5em;
+  font-size: 6em;
+  margin-bottom: 1em;
 }
 
 #submit:active {
   background-color: lightblue;
 }
 
-#lastProb {
+/*#lastProb {
   visibility: hidden;
+}*/
+
+#problem {
+  margin-top: 10%;
 }
 
+/* CLASSES USED IN THE ANIMATION BELOW */
 .green {
   -webkit-animation-name: correct;
   -webkit-animation-duration: 0.3s;
@@ -99,6 +133,8 @@ ul {
   animation-duration: 0.3s;
 }
 
+
+/* ANIMATIONS */
 @-webkit-keyframes correct {
   25%   { background-color: green; }
   /*50%   { background-color: white; }

@@ -5,7 +5,7 @@ angular.module('mathApp.controllers', [])
 .controller('levelController', function($scope, $routeParams) {
   var problem;        // hold operands and operator at problem creation
   $scope.level = parseInt($routeParams.level);//levelFactory.getFactory();
-  $scope.tries = 0, correct = 0, wrong = 0;
+  $scope.tries = 0, $scope.correct = 0, $scope.wrong = 0;
   $scope.answer="";
 
   displayProblem();
@@ -29,17 +29,16 @@ angular.module('mathApp.controllers', [])
     console.log(mathAnswer($scope.operand1, $scope.operand2)[$scope.operator]);
     document.getElementById("answer").focus();
     if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      correct++;
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      toDoOnCorrect($scope, correct);
+      $scope.correct++;
+      // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
+      toDoOnCorrect($scope, $scope.correct);
     // add class for green flash, remove it a short time later to refresh the animation
       $('body').addClass("green");
       setTimeout(function() {$('body').removeClass("green");}, 100);
       displayProblem();
     } else {
-      wrong++;
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      $scope.validate = "wrong " + wrong + ": " + $scope.percentage + "%";
+      $scope.wrong++;
+      // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
     // add class for red flash, remove it a short time later to refresh the animation
       $('body').addClass("red");
       setTimeout(function() {$('body').removeClass("red");}, 100);
@@ -91,7 +90,7 @@ angular.module('mathApp.controllers', [])
     document.getElementById("answer").focus();
     if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
       correct++;
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
+      // $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
       toDoOnCorrect($scope, correct);
     // add class for green flash, remove it a short time later to refresh the animation
       $('body').addClass("green");
@@ -99,8 +98,7 @@ angular.module('mathApp.controllers', [])
       displayProblem();
     } else {
       wrong++;
-      $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
-      $scope.validate = "wrong " + wrong + ": " + $scope.percentage + "%";
+      // $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
     // add class for red flash, remove it a short time later to refresh the animation
       $('body').addClass("red");
       setTimeout(function() {$('body').removeClass("red");}, 100);
@@ -139,13 +137,12 @@ function formatTime(time) {
 
 // Does some stuff with the view whenever a correct answer is submitted.
 function toDoOnCorrect($scope, correct) {
-  $scope.validate = "correct " + correct + ": " + $scope.percentage + "%";
-  $scope.lastOp1 = $scope.operand1;
-  $scope.lastOp2 = $scope.operand2;
-  $scope.lastOperator = $scope.operator;
-  $scope.lastAns = $scope.answer;
+  // $scope.lastOp1 = $scope.operand1;
+  // $scope.lastOp2 = $scope.operand2;
+  // $scope.lastOperator = $scope.operator;
+  // $scope.lastAns = $scope.answer;
   $scope.answer = "";
-  document.getElementById("lastProb").style.visibility = "visible";
+  // document.getElementById("lastProb").style.visibility = "visible";
 }
 
 // Create the operands and operators for each level of Math.
