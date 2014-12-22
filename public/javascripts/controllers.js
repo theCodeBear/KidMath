@@ -4,8 +4,10 @@ angular.module('mathApp.controllers', [])
 // LEVEL CONTROLLER //
 .controller('levelController', function($scope, $routeParams) {
   var problem;        // hold operands and operator at problem creation
+  var operator;        // used to handle division symbol which wasn't working in mathAnswer()
   $scope.level = parseInt($routeParams.level);//levelFactory.getFactory();
-  $scope.tries = 0, $scope.correct = 0, $scope.wrong = 0;
+  /*$scope.tries = 0, */$scope.correct = 0, $scope.wrong = 0;
+  $scope.lastAns = "";
   $scope.answer="";
 
   displayProblem();
@@ -21,27 +23,40 @@ angular.module('mathApp.controllers', [])
 
   // Handles all actions associated with user submitting an answer to a problem
   $scope.submitAnswer = function() {
-    $scope.tries++;
-    if ($scope.answer == undefined) {
-      document.getElementById("answer").focus();
-      return;
-    }
-    console.log(mathAnswer($scope.operand1, $scope.operand2)[$scope.operator]);
-    document.getElementById("answer").focus();
-    if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      $scope.correct++;
-      // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
-      toDoOnCorrect($scope, $scope.correct);
-    // add class for green flash, remove it a short time later to refresh the animation
-      $('body').addClass("green");
-      setTimeout(function() {$('body').removeClass("green");}, 100);
-      displayProblem();
-    } else {
-      $scope.wrong++;
-      // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
-    // add class for red flash, remove it a short time later to refresh the animation
-      $('body').addClass("red");
-      setTimeout(function() {$('body').removeClass("red");}, 100);
+    // $scope.tries++;
+    // if ($scope.answer == undefined) {
+    //   document.getElementById("answer").focus();
+    //   return;
+    // }
+    // document.getElementById("answer").focus();
+    console.log("last: " + $scope.lastAns);
+    console.log("ans: " + $scope.answer);
+
+  // only allow use to answer if input has changed and is not blank
+    if ($scope.answer !== $scope.lastAns && $scope.answer !== "") {
+      $scope.lastAns = $scope.answer;
+      // if division, change from proper division sign to '/' in order to complete calculation
+      if ($scope.operator === String.fromCharCode(247))
+        operator = '/';
+      else
+        operator = $scope.operator;
+      // console.log("answerCalc:" + mathAnswer($scope.operand1, $scope.operand2)[operator]);
+      if (mathAnswer($scope.operand1, $scope.operand2)[operator] == $scope.answer) {
+        $scope.correct++;
+        $scope.lastAns = "";    // reset lastAns if new question
+        // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
+        toDoOnCorrect($scope, $scope.correct);
+      // add class for green flash, remove it a short time later to refresh the animation
+        $('body').addClass("green");
+        setTimeout(function() {$('body').removeClass("green");}, 100);
+        displayProblem();
+      } else {
+        $scope.wrong++;
+        // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
+      // add class for red flash, remove it a short time later to refresh the animation
+        $('body').addClass("red");
+        setTimeout(function() {$('body').removeClass("red");}, 100);
+      }
     }
   }
 
@@ -130,11 +145,6 @@ function formatTime(time) {
 }
 
 
-
-
-
-
-
 // Does some stuff with the view whenever a correct answer is submitted.
 function toDoOnCorrect($scope, correct) {
   // $scope.lastOp1 = $scope.operand1;
@@ -149,8 +159,8 @@ function toDoOnCorrect($scope, correct) {
 function createProblem(level) {
   switch(level) {
     case 1:
-      var op1 = Math.floor(Math.random() * 10);
-      var op2 = Math.floor(Math.random() * 10);
+      var op1 = Math.floor(Math.random() * 2);
+      var op2 = Math.floor(Math.random() * 2);
       var operator = "+";
       break;
     case 2:
@@ -164,23 +174,29 @@ function createProblem(level) {
       var operator = 'x';
       break;
     case 4:
-      var op2 = Math.floor(Math.random() * 10);
+      var op2 = Math.floor(Math.random() * 10) + 1;   // +1 to avoid division by zero
       var op1 = op2 * Math.floor(Math.random() * 10);
-      var operator = '/';
+      var operator = String.fromCharCode(247);
       break;
     case 5:
       var op1 = Math.floor(Math.random() * 10);
       var op2 = Math.floor(Math.random() * 10);
-      var operator = ['+','-','x','/'][Math.floor(Math.random() * 4)];
-      if (operator == '/')
+      var operator = ['+','-','x',String.fromCharCode(247)][Math.floor(Math.random() * 4)];
+      if (operator == String.fromCharCode(247)) {
         op1 = op2 * Math.floor(Math.random() * 10);
+        if (op2 == 0)
+          op2 = Math.floor(Math.random() * 10) + 1;
+      }
       break;
     case 6:
       var op1 = Math.floor(Math.random() * 10);
       var op2 = Math.floor(Math.random() * 10);
-      var operator = ['+','-','x','/'][Math.floor(Math.random() * 4)];
-      if (operator == '/')
+      var operator = ['+','-','x',String.fromCharCode(247)][Math.floor(Math.random() * 4)];
+      if (operator == String.fromCharCode(247)) {
         op1 = op2 * Math.floor(Math.random() * 10);
+        if (op2 == 0)
+          op2 = Math.floor(Math.random() * 10) + 1;   // +1 to avoid division by zero
+      }
       break;
   }
   return [op1,op2,operator];
