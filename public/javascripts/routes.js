@@ -6,16 +6,13 @@ angular.module('mathApp', ['ngRoute', 'mathApp.controllers'])
       when('/', {
         templateUrl: '/menu.html'
       }).
-      when('/level/:level', {
+      when('/level/:level/:type', {
         templateUrl: '/level.html',
         controller: 'levelController'
-      }).
-      when('/timedlevel/:level', {
-        templateUrl: '/timedLevel.html',
-        controller: 'timedLevelController'
       }).
       otherwise({
         redirectTo: '/'
       });
   }
 ]);
+//kjhkjh

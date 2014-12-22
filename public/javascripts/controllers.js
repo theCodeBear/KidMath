@@ -10,6 +10,13 @@ angular.module('mathApp.controllers', [])
   $scope.lastAns = "";
   $scope.answer="";
 
+  if ($routeParams.type == "timed") {
+    var minutes = function(mins) { return mins * 60 * 1000; };
+    var intervalDisplayInMilli = (minutes(2));
+    timer(intervalDisplayInMilli/1000);
+    document.getElementById("clock").style.visibility="visible";
+  }
+
   displayProblem();
   document.getElementById("answer").focus();
 
@@ -23,9 +30,6 @@ angular.module('mathApp.controllers', [])
 
   // Handles all actions associated with user submitting an answer to a problem
   $scope.submitAnswer = function() {
-    console.log("last: " + $scope.lastAns);
-    console.log("ans: " + $scope.answer);
-
   // only allow use to answer if input has changed and is not blank
     if ($scope.answer !== $scope.lastAns && $scope.answer !== "") {
       $scope.lastAns = $scope.answer;
@@ -60,48 +64,6 @@ angular.module('mathApp.controllers', [])
   $scope.answerBackspace = function() {
     $scope.answer = $scope.answer.split("").slice(0,-1).join("");
   }
-})
-
-
-// TIMED LEVEL CONTROLLER //
-.controller('timedLevelController', function($scope, $routeParams) {
-
-  var minutes = function(mins) { return mins * 60 * 1000; };
-  var intervalDisplayInMilli = (minutes(2));
-  timer(intervalDisplayInMilli/1000);
-
-  var problem;        // hold operands and operator at problem creation
-  $scope.level = parseInt($routeParams.level);//levelFactory.getFactory();
-  $scope.correct = 0, $scope.wrong = 0;
-
-  displayProblem();
-  document.getElementById("answer").focus();
-
-  // loads problem created in createProblem() into $scope properties for use in controller
-  function displayProblem() {
-    problem = createProblem($scope.level);
-    $scope.operand1 = problem[0];
-    $scope.operand2 = problem[1];
-    $scope.operator = problem[2];
-  }
-
-  // Handles all actions associated with user submitting an answer to a problem
-  $scope.submitAnswer = function() {
-    if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      $scope.correct++;
-      toDoOnCorrect($scope, correct);
-    // add class for green flash, remove it a short time later to refresh the animation
-      $('body').addClass("green");
-      setTimeout(function() {$('body').removeClass("green");}, 100);
-      displayProblem();
-    } else {
-      $scope.wrong++;
-    // add class for red flash, remove it a short time later to refresh the animation
-      $('body').addClass("red");
-      setTimeout(function() {$('body').removeClass("red");}, 100);
-    }
-  }
-
 });
 
 
@@ -136,8 +98,8 @@ function toDoOnCorrect($scope, correct) {
 function createProblem(level) {
   switch(level) {
     case 1:
-      var op1 = Math.floor(Math.random() * 2);
-      var op2 = Math.floor(Math.random() * 2);
+      var op1 = Math.floor(Math.random() * 10);
+      var op2 = Math.floor(Math.random() * 10);
       var operator = "+";
       break;
     case 2:

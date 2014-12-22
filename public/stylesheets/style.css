@@ -65,11 +65,15 @@ ul {
 
 #levelDisplay {
   display: inline;
+  margin: 0;
+  padding: 0;
+  text-align: left;
 }
 
 #navbarStats {
   font-size: 4em;
-  float: right;
+  text-align: right;
+  padding: 0;
 }
 
 #correct {
@@ -110,6 +114,13 @@ ul {
 
 #problem {
   margin-top: 10%;
+}
+
+#clock {
+  visibility: hidden;
+  font-size: 4em;
+  text-align: center;
+  color: orange;
 }
 
 /* CLASSES USED IN THE ANIMATION BELOW */
