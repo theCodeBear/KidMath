@@ -6,7 +6,7 @@ angular.module('mathApp.controllers', [])
   var problem;        // hold operands and operator at problem creation
   var operator;        // used to handle division symbol which wasn't working in mathAnswer()
   $scope.level = parseInt($routeParams.level);//levelFactory.getFactory();
-  /*$scope.tries = 0, */$scope.correct = 0, $scope.wrong = 0;
+  $scope.correct = 0, $scope.wrong = 0;
   $scope.lastAns = "";
   $scope.answer="";
 
@@ -23,12 +23,6 @@ angular.module('mathApp.controllers', [])
 
   // Handles all actions associated with user submitting an answer to a problem
   $scope.submitAnswer = function() {
-    // $scope.tries++;
-    // if ($scope.answer == undefined) {
-    //   document.getElementById("answer").focus();
-    //   return;
-    // }
-    // document.getElementById("answer").focus();
     console.log("last: " + $scope.lastAns);
     console.log("ans: " + $scope.answer);
 
@@ -40,11 +34,9 @@ angular.module('mathApp.controllers', [])
         operator = '/';
       else
         operator = $scope.operator;
-      // console.log("answerCalc:" + mathAnswer($scope.operand1, $scope.operand2)[operator]);
       if (mathAnswer($scope.operand1, $scope.operand2)[operator] == $scope.answer) {
         $scope.correct++;
         $scope.lastAns = "";    // reset lastAns if new question
-        // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
         toDoOnCorrect($scope, $scope.correct);
       // add class for green flash, remove it a short time later to refresh the animation
         $('body').addClass("green");
@@ -52,7 +44,6 @@ angular.module('mathApp.controllers', [])
         displayProblem();
       } else {
         $scope.wrong++;
-        // $scope.percentage = Math.floor(($scope.correct / ($scope.correct+$scope.wrong)) * 100) || 0;
       // add class for red flash, remove it a short time later to refresh the animation
         $('body').addClass("red");
         setTimeout(function() {$('body').removeClass("red");}, 100);
@@ -81,7 +72,7 @@ angular.module('mathApp.controllers', [])
 
   var problem;        // hold operands and operator at problem creation
   $scope.level = parseInt($routeParams.level);//levelFactory.getFactory();
-  $scope.tries = 0, correct = 0, wrong = 0;
+  $scope.correct = 0, $scope.wrong = 0;
 
   displayProblem();
   document.getElementById("answer").focus();
@@ -96,24 +87,15 @@ angular.module('mathApp.controllers', [])
 
   // Handles all actions associated with user submitting an answer to a problem
   $scope.submitAnswer = function() {
-    $scope.tries++;
-    if ($scope.answer == undefined) {
-      document.getElementById("answer").focus();
-      return;
-    }
-    console.log(mathAnswer($scope.operand1, $scope.operand2)[$scope.operator]);
-    document.getElementById("answer").focus();
     if (mathAnswer($scope.operand1, $scope.operand2)[$scope.operator] == $scope.answer) {
-      correct++;
-      // $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
+      $scope.correct++;
       toDoOnCorrect($scope, correct);
     // add class for green flash, remove it a short time later to refresh the animation
       $('body').addClass("green");
       setTimeout(function() {$('body').removeClass("green");}, 100);
       displayProblem();
     } else {
-      wrong++;
-      // $scope.percentage = Math.floor((correct / (correct+wrong)) * 100) || 0;
+      $scope.wrong++;
     // add class for red flash, remove it a short time later to refresh the animation
       $('body').addClass("red");
       setTimeout(function() {$('body').removeClass("red");}, 100);
@@ -147,12 +129,7 @@ function formatTime(time) {
 
 // Does some stuff with the view whenever a correct answer is submitted.
 function toDoOnCorrect($scope, correct) {
-  // $scope.lastOp1 = $scope.operand1;
-  // $scope.lastOp2 = $scope.operand2;
-  // $scope.lastOperator = $scope.operator;
-  // $scope.lastAns = $scope.answer;
   $scope.answer = "";
-  // document.getElementById("lastProb").style.visibility = "visible";
 }
 
 // Create the operands and operators for each level of Math.
