@@ -46,6 +46,30 @@ ul {
   font-weight: bold;
 }
 
+.modal-dialog {
+  width: 80%;
+}
+
+.modal-content {
+  padding: 20%;
+  margin-top: 30%;
+}
+
+.modal-body {
+  font-size: 6em;
+  width: 100%;
+  /*text-align: center;*/
+  margin: 5%;
+}
+
+.modal-body p {
+  text-align: center;
+}
+
+.modal-footer {
+  text-align: center;
+}
+
 .bottom {
 /*  position: relative;
   left: 5%;
@@ -121,6 +145,11 @@ ul {
   font-size: 4em;
   text-align: center;
   color: orange;
+}
+
+#startTimer {
+  font-size: 4em;
+  width: 100%;
 }
 
 /* CLASSES USED IN THE ANIMATION BELOW */

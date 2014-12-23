@@ -10,11 +10,16 @@ angular.module('mathApp.controllers', [])
   $scope.lastAns = "";
   $scope.answer="";
 
-  if ($routeParams.type == "timed") {
-    var minutes = function(mins) { return mins * 60 * 1000; };
-    var intervalDisplayInMilli = (minutes(2));
-    timer(intervalDisplayInMilli/1000);
-    document.getElementById("clock").style.visibility="visible";
+  // adds in the stuff for the timed levels
+  if ($routeParams.type === "timed") {
+    // sets time for timer level, must be used a whole minute because of the way I parse things now for the timer() function.
+    $scope.startTime = "2:00";
+
+    // adds the timer amount to the modal and shows the modal when page opens
+    var clockView = document.createElement('p');
+    clockView.appendChild(document.createTextNode($scope.startTime));
+    $('.modal-body').append(clockView);
+    $('#timerModal').modal('show');
   }
 
   displayProblem();
@@ -64,6 +69,15 @@ angular.module('mathApp.controllers', [])
   $scope.answerBackspace = function() {
     $scope.answer = $scope.answer.split("").slice(0,-1).join("");
   }
+
+  // Start timer and display clock when modal button is clicked to start the timer on timed levels.
+  $("#startTimer").on("click", function(e) {
+    var timeNum = parseInt($scope.startTime.split(':')[0]);
+    var minutes = function(mins) { return mins * 60 * 1000; };
+    var intervalDisplayInMilli = (minutes(timeNum));
+    timer(intervalDisplayInMilli/1000);
+    document.getElementById("clock").style.visibility="visible";
+  });
 });
 
 
@@ -121,9 +135,9 @@ function createProblem(level) {
       var op1 = Math.floor(Math.random() * 10);
       var op2 = Math.floor(Math.random() * 10);
       var operator = ['+','-','x',String.fromCharCode(247)][Math.floor(Math.random() * 4)];
-      if (operator == String.fromCharCode(247)) {
+      if (operator === String.fromCharCode(247)) {
         op1 = op2 * Math.floor(Math.random() * 10);
-        if (op2 == 0)
+        if (op2 === 0)
           op2 = Math.floor(Math.random() * 10) + 1;
       }
       break;
@@ -131,9 +145,9 @@ function createProblem(level) {
       var op1 = Math.floor(Math.random() * 10);
       var op2 = Math.floor(Math.random() * 10);
       var operator = ['+','-','x',String.fromCharCode(247)][Math.floor(Math.random() * 4)];
-      if (operator == String.fromCharCode(247)) {
+      if (operator === String.fromCharCode(247)) {
         op1 = op2 * Math.floor(Math.random() * 10);
-        if (op2 == 0)
+        if (op2 === 0)
           op2 = Math.floor(Math.random() * 10) + 1;   // +1 to avoid division by zero
       }
       break;
@@ -148,7 +162,7 @@ function mathAnswer(x,y) {
     "-": function(x,y) { return x - y; }(x,y),
     "x": function(x,y) { return x * y; }(x,y),
     "/": function(x,y) { return Math.round(x / y); }(x,y)   // rounding off division for now
-  }
+  };
 }
 
 
