@@ -4,11 +4,15 @@ angular.module('mathApp', ['ngRoute', 'mathApp.controllers'])
   function($routeProvider) {
     $routeProvider.
       when('/', {
-        templateUrl: '/menu.html'
+        templateUrl: '/templates/menu.html'
       }).
       when('/level/:level/:type', {
-        templateUrl: '/level.html',
+        templateUrl: '/templates/level.html',
         controller: 'levelController'
+      }).
+      when('/timerStats/:correct/:wrong', {
+        templateUrl: '/templates/stats.html',
+        controller: 'stats'
       }).
       otherwise({
         redirectTo: '/'

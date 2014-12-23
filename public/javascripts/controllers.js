@@ -2,7 +2,7 @@
 angular.module('mathApp.controllers', [])
 
 // LEVEL CONTROLLER //
-.controller('levelController', function($scope, $routeParams) {
+.controller('levelController', function($scope, $routeParams, $location) {
   var problem;        // hold operands and operator at problem creation
   var operator;        // used to handle division symbol which wasn't working in mathAnswer()
   $scope.level = parseInt($routeParams.level);//levelFactory.getFactory();
@@ -13,7 +13,7 @@ angular.module('mathApp.controllers', [])
   // adds in the stuff for the timed levels
   if ($routeParams.type === "timed") {
     // sets time for timer level, must be used a whole minute because of the way I parse things now for the timer() function.
-    $scope.startTime = "2:00";
+    $scope.startTime = "1:00";
 
     // adds the timer amount to the modal and shows the modal when page opens
     var clockView = document.createElement('p');
@@ -74,10 +74,29 @@ angular.module('mathApp.controllers', [])
   $("#startTimer").on("click", function(e) {
     var timeNum = parseInt($scope.startTime.split(':')[0]);
     var minutes = function(mins) { return mins * 60 * 1000; };
-    var intervalDisplayInMilli = (minutes(timeNum));
+    var intervalDisplayInMilli = (minutes(0.1));//timeNum));
     timer(intervalDisplayInMilli/1000);
     document.getElementById("clock").style.visibility="visible";
   });
+
+  // Timer function that operates recursively to count down.
+  function timer(time) {
+    var clock = formatTime(time);
+    if (time < 0) {
+      // automatically move to Stats page when timer runs out
+      $scope.$apply(function() { $location.url('/timerStats/'+$scope.correct+"/"+$scope.wrong); } );
+      return;
+    }
+    document.getElementById("clock").innerHTML = clock;
+    setTimeout(timer, 1000, --time);
+  }
+})
+
+
+// CONTROLLER FOR STATS PAGE DISPLAYED AFTER TIME CHALLENGE //
+.controller('stats', function($scope, $routeParams) {
+  $scope.correct = $routeParams.correct;
+  $scope.wrong = $routeParams.wrong;
 });
 
 
@@ -85,16 +104,7 @@ angular.module('mathApp.controllers', [])
 
 // FUNCTIONS //
 
-// Timer function that operates recursively to count down.
-function timer(time) {
-  var clock = formatTime(time);
-  if (time < 0) {
 
-    return;
-  }
-  document.getElementById("clock").innerHTML = clock;
-  setTimeout(timer, 1000, --time);
-}
 
 // Formats the time displayed on the clock in timer().
 function formatTime(time) {
