@@ -87,7 +87,9 @@ angular.module('mathApp.controllers', [])
       $scope.$apply(function() { $location.url('/timerStats/'+$scope.correct+"/"+$scope.wrong); } );
       return;
     }
-    document.getElementById("clock").innerHTML = clock;
+    // An error pops up at some random time in the menu page in the chrome console about "#clock" not existing, so I check for it to remove error.
+    if (document.getElementById("clock"))
+      document.getElementById("clock").innerHTML = clock;
     setTimeout(timer, 1000, --time);
   }
 })
@@ -97,6 +99,7 @@ angular.module('mathApp.controllers', [])
 .controller('stats', function($scope, $routeParams) {
   $scope.correct = $routeParams.correct;
   $scope.wrong = $routeParams.wrong;
+  $scope.percentage = ( ($scope.correct / (parseInt($scope.correct) + parseInt($scope.wrong))) * 100 ).toFixed(1);
 });
 
 

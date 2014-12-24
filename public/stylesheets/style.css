@@ -87,6 +87,24 @@ ul {
   border: 5px solid black;
 }
 
+.timedStats {
+  font-size: 4em;
+  text-align: center;
+}
+
+.correctStats {
+  color: green;
+}
+
+.wrongStats {
+  color: red;
+}
+
+.title {
+  margin-bottom: 2em;
+  font-size: 5em;
+}
+
 #levelDisplay {
   display: inline;
   margin: 0;
