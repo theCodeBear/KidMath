@@ -74,7 +74,7 @@ angular.module('mathApp.controllers', [])
   $("#startTimer").on("click", function(e) {
     var timeNum = parseInt($scope.startTime.split(':')[0]);
     var minutes = function(mins) { return mins * 60 * 1000; };
-    var intervalDisplayInMilli = (minutes(0.1));//timeNum));
+    var intervalDisplayInMilli = (minutes(timeNum));
     timer(intervalDisplayInMilli/1000);
     document.getElementById("clock").style.visibility="visible";
   });
